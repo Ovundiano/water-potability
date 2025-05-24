@@ -1,85 +1,76 @@
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
-from sklearn.ensemble import RandomForestClassifier
-import plotly.express as px
+import joblib
+from pathlib import Path
 
 
 def prediction_interface(df):
-    """Display prediction interface section"""
+    """Provide an interface for predicting water potability based on user inputs."""
     st.header("6. Water Potability Prediction")
 
-    if "Potability" in df.columns:
-        X = df.drop("Potability", axis=1)
-        y = df["Potability"]
+    if "Potability" not in df.columns:
+        st.error("Target column 'Potability' not found.")
+        return
 
-        # Train the best model (Random Forest as default)
-        model = RandomForestClassifier(random_state=42)
-        model.fit(X, y)
+    X = df.drop("Potability", axis=1)
 
-        st.subheader("Enter Water Quality Parameters")
+    # Load pre-trained Random Forest model
+    model_path = Path("models/best_random_forest_model.pkl")
+    try:
+        if not model_path.exists():
+            st.error(f"Pre-trained model not found at: {model_path}")
+            return
+        model = joblib.load(model_path)
+        st.success("Pre-trained Random Forest model loaded successfully.")
+    except Exception as e:
+        st.error(f"Error loading model: {str(e)}")
+        return
 
-        # Create two columns for input fields
-        col1, col2 = st.columns(2)
+    # Input interface
+    st.subheader("Enter Water Quality Parameters")
+    col1, col2 = st.columns(2)
+    user_input = {}
 
-        # Initialize user inputs with mean values
-        user_input = {}
-
-        # First column of inputs
-        with col1:
-            for column in X.columns[:5]:  # First half of features
-                min_val = float(X[column].min())
-                max_val = float(X[column].max())
-                mean_val = float(X[column].mean())
-
+    try:
+        for i, column in enumerate(X.columns):
+            min_val = float(X[column].min())
+            max_val = float(X[column].max())
+            mean_val = float(X[column].mean())
+            with col1 if i % 2 == 0 else col2:
                 user_input[column] = st.slider(
                     f"{column}:",
                     min_value=min_val,
                     max_value=max_val,
                     value=mean_val,
                     format="%.4f",
+                    key=f"slider_{column}",
                 )
+    except Exception as e:
+        st.error(f"Error creating input sliders: {str(e)}")
+        return
 
-        # Second column of inputs
-        with col2:
-            for column in X.columns[5:]:  # Second half of features
-                min_val = float(X[column].min())
-                max_val = float(X[column].max())
-                mean_val = float(X[column].mean())
-
-                user_input[column] = st.slider(
-                    f"{column}:",
-                    min_value=min_val,
-                    max_value=max_val,
-                    value=mean_val,
-                    format="%.4f",
-                )
-
-        # Convert inputs to DataFrame
-        input_df = pd.DataFrame([user_input])
-
-        # Make prediction
-        if st.button("Predict Water Potability"):
+    # Prediction
+    if st.button("Predict Water Potability", key="predict_button"):
+        try:
+            input_df = pd.DataFrame([user_input])
             prediction = model.predict(input_df)
             probability = model.predict_proba(input_df)
 
             st.subheader("Prediction Result")
-
-            # Display prediction with color
             if prediction[0] == 1:
                 st.success(
-                    "POTABLE: This water is predicted to be safe for consumption!"
+                    "POTABLE: This water is predicted to be safe for consumption! 🎉"
                 )
                 st.balloons()
             else:
                 st.error(
-                    "NOT POTABLE: This water is predicted to be unsafe for consumption!"
+                    "NOT POTABLE: This water is predicted to be unsafe for consumption! ⚠️"
                 )
 
-            # Display probability
             st.write(f"Probability of being potable: {probability[0][1]:.4f}")
 
-            # Create a gauge chart for probability
+            # Gauge chart
             fig = go.Figure(
                 go.Indicator(
                     mode="gauge+number",
@@ -102,32 +93,24 @@ def prediction_interface(df):
                     },
                 )
             )
+            st.plotly_chart(fig, use_container_width=True)
 
-            st.plotly_chart(fig)
-
-            # Feature importance for this prediction
-            st.subheader("Feature Contribution to Prediction")
-
-            if hasattr(model, "feature_importances_"):
-                # General feature importance
-                feature_imp = pd.DataFrame(
-                    {
-                        "Feature": X.columns,
-                        "Importance": model.feature_importances_,
-                        "Value": [user_input[col] for col in X.columns],
-                    }
-                ).sort_values("Importance", ascending=False)
-
-                fig = px.bar(
-                    feature_imp,
-                    x="Importance",
-                    y="Feature",
-                    orientation="h",
-                    title="Feature Importance for Prediction",
-                    color="Value",
-                    color_continuous_scale="RdBu_r",
-                )
-
-                st.plotly_chart(fig)
+            # Feature importance
+            st.subheader("Feature Contribution")
+            feature_imp = pd.DataFrame(
+                {"Feature": X.columns, "Importance": model.feature_importances_}
+            ).sort_values("Importance", ascending=False)
+            fig = px.bar(
+                feature_imp,
+                x="Importance",
+                y="Feature",
+                orientation="h",
+                title="Feature Importance for Prediction",
+                color="Importance",
+                color_continuous_scale="Viridis",
+            )
+            st.plotly_chart(fig, use_container_width=True)
+        except Exception as e:
+            st.error(f"Error making prediction: {str(e)}")
 
     st.markdown("---")

@@ -4,148 +4,137 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+from sklearn.ensemble import RandomForestClassifier
+from scipy import stats
 
 
 def data_overview(df):
-    """Display data overview section"""
+    """Display an overview of the dataset with basic statistics and visualizations."""
     st.header("1. Data Overview")
 
-    # Show raw data explorer
-    if st.checkbox("Show raw data"):
+    # Raw data explorer
+    with st.expander("View Raw Data", expanded=False):
         st.subheader("Raw Data")
         st.dataframe(df)
 
-    # Display data info
+    # Data information
     st.subheader("Data Information")
-
-    # Create columns for better layout
     col1, col2 = st.columns(2)
 
     with col1:
-        st.markdown("**Data Shape**")
+        st.markdown("**Dataset Shape**")
         st.write(f"Rows: {df.shape[0]}")
         st.write(f"Columns: {df.shape[1]}")
 
         st.markdown("**Data Types**")
-        buffer = pd.DataFrame(df.dtypes, columns=["Data Type"])
-        st.dataframe(buffer)
+        st.dataframe(pd.DataFrame(df.dtypes, columns=["Data Type"]))
 
     with col2:
         st.markdown("**Missing Values**")
         missing_data = pd.DataFrame(df.isna().sum(), columns=["Missing Values"])
-        missing_data["Percentage"] = round(
-            missing_data["Missing Values"] / len(df) * 100, 2
-        )
+        missing_data["Percentage"] = (
+            missing_data["Missing Values"] / len(df) * 100
+        ).round(2)
         st.dataframe(missing_data)
 
-        st.markdown("**Target Distribution**")
         if "Potability" in df.columns:
+            st.markdown("**Target Distribution**")
             potability_counts = df["Potability"].value_counts().reset_index()
             potability_counts.columns = ["Potability", "Count"]
             fig = px.pie(
                 potability_counts,
                 values="Count",
-                names="Potability",
+                names=["Not Potable", "Potable"],
                 title="Distribution of Potable vs Non-Potable Water",
                 color_discrete_sequence=px.colors.qualitative.Set2,
                 hole=0.4,
             )
-            st.plotly_chart(fig)
+            st.plotly_chart(fig, use_container_width=True)
         else:
-            st.warning("Target column 'Potability' not found in the dataset")
+            st.warning("Target column 'Potability' not found.")
 
-    # Data summary statistics
+    # Summary statistics
     st.subheader("Summary Statistics")
     st.dataframe(df.describe())
-
     st.markdown("---")
 
 
 def exploratory_data_analysis(df):
-    """Display exploratory data analysis section"""
+    """Perform exploratory data analysis with visualizations."""
     st.header("3. Exploratory Data Analysis")
 
-    # Distribution of features
-    st.subheader("Distribution of Features")
-
+    # Feature distribution
+    st.subheader("Feature Distributions")
     selected_feature = st.selectbox(
-        "Select feature to visualize distribution:",
-        df.columns[:-1],  # All columns except the target column
+        "Select feature to visualize:", df.columns[:-1], key="feature_dist_select"
     )
 
-    fig = make_subplots(rows=1, cols=2)
-
-    # Histogram
+    fig = make_subplots(rows=1, cols=2, subplot_titles=["Histogram & KDE", "Box Plot"])
     fig.add_trace(
         go.Histogram(x=df[selected_feature], nbinsx=30, name="Histogram"), row=1, col=1
     )
-
-    # KDE
     kde_y, kde_x = np.histogram(df[selected_feature].dropna(), bins=30, density=True)
-    kde_x = (kde_x[:-1] + kde_x[1:]) / 2  # Get bin centers
-
-    fig.add_trace(
-        go.Scatter(x=kde_x, y=kde_y, mode="lines", name="Density"), row=1, col=1
-    )
-
-    # Box plot
+    kde_x = (kde_x[:-1] + kde_x[1:]) / 2
+    fig.add_trace(go.Scatter(x=kde_x, y=kde_y, mode="lines", name="KDE"), row=1, col=1)
     fig.add_trace(go.Box(y=df[selected_feature], name="Box Plot"), row=1, col=2)
-
     fig.update_layout(
-        title=f"Distribution of {selected_feature}", height=400, width=800
+        title=f"Distribution of {selected_feature}", height=400, showlegend=False
     )
-
-    st.plotly_chart(fig)
+    st.plotly_chart(fig, use_container_width=True)
 
     # Correlation analysis
     st.subheader("Correlation Analysis")
-
     corr_matrix = df.corr()
-
     fig = px.imshow(
         corr_matrix,
-        text_auto=True,
+        text_auto=".2f",
         color_continuous_scale="RdBu_r",
         title="Feature Correlation Matrix",
     )
+    st.plotly_chart(fig, use_container_width=True)
 
-    st.plotly_chart(fig)
-
-    # Feature relationships with target
-    st.subheader("Feature Relationships with Potability")
-
+    # Feature vs Potability
     if "Potability" in df.columns:
+        st.subheader("Feature Relationships with Potability")
         selected_features = st.multiselect(
-            "Select features to visualize relationship with potability:",
+            "Select features to compare with Potability:",
             df.columns[:-1],
-            default=df.columns[0],
+            default=[df.columns[0]],
+            key="feature_vs_potability",
         )
 
-        if selected_features:
-            for feature in selected_features:
-                fig = px.box(
-                    df,
-                    x="Potability",
-                    y=feature,
-                    title=f"{feature} vs Potability",
-                    color="Potability",
-                    labels={
-                        "Potability": "Water Potability (0: Not Potable, 1: Potable)"
-                    },
-                )
+        for feature in selected_features:
+            fig = px.box(
+                df,
+                x="Potability",
+                y=feature,
+                color="Potability",
+                title=f"{feature} vs Potability",
+                labels={"Potability": "Water Potability (0: Not Potable, 1: Potable)"},
+                color_discrete_sequence=px.colors.qualitative.Set2,
+            )
+            st.plotly_chart(fig, use_container_width=True)
 
-                st.plotly_chart(fig)
+        # Statistical significance
+        with st.expander("Statistical Significance (T-tests)", expanded=False):
+            results = []
+            for col in df.columns[:-1]:
+                group0 = df[df["Potability"] == 0][col]
+                group1 = df[df["Potability"] == 1][col]
+                t_stat, p_val = stats.ttest_ind(group0, group1, nan_policy="omit")
+                results.append({"Feature": col, "p-value": round(p_val, 4)})
+            st.dataframe(
+                pd.DataFrame(results).sort_values("p-value"), use_container_width=True
+            )
 
-    # Pairwise relationships
-    st.subheader("Pairwise Feature Relationships")
-
-    if st.checkbox("Show pairplot (Warning: May be slow for large datasets)"):
+    # Pairplot
+    with st.expander("Pairwise Feature Relationships", expanded=False):
         selected_cols = st.multiselect(
-            "Select features for pairplot (recommended: max 4):",
+            "Select features for pairplot (max 4 recommended):",
             df.columns,
             default=list(df.columns[:3]) + ["Potability"],
+            key="pairplot_select",
         )
-
         if len(selected_cols) > 1:
             fig = px.scatter_matrix(
                 df[selected_cols],
@@ -156,64 +145,69 @@ def exploratory_data_analysis(df):
                 ),
                 color="Potability" if "Potability" in selected_cols else None,
                 title="Pairwise Feature Relationships",
+                color_discrete_sequence=px.colors.qualitative.Set2,
             )
-
-            fig.update_layout(height=800, width=800)
-            st.plotly_chart(fig)
+            fig.update_layout(height=800)
+            st.plotly_chart(fig, use_container_width=True)
 
     st.markdown("---")
 
 
 def feature_importance_analysis(df):
-    """Display feature importance analysis"""
+    """Analyze feature importance using Random Forest and correlation."""
     st.header("4. Feature Importance Analysis")
 
     if "Potability" in df.columns:
         X = df.drop("Potability", axis=1)
         y = df["Potability"]
 
-        # Random Forest for feature importance
-        from sklearn.ensemble import RandomForestClassifier
-
+        # Random Forest feature importance
         st.subheader("Random Forest Feature Importance")
-
-        rf = RandomForestClassifier(random_state=42)
-        rf.fit(X, y)
-
-        feature_importance = pd.DataFrame(
-            {"Feature": X.columns, "Importance": rf.feature_importances_}
-        ).sort_values("Importance", ascending=False)
-
-        fig = px.bar(
-            feature_importance,
-            x="Importance",
-            y="Feature",
-            orientation="h",
-            title="Feature Importance from Random Forest",
-            color="Importance",
-            color_continuous_scale="viridis",
-        )
-
-        st.plotly_chart(fig)
+        try:
+            rf = RandomForestClassifier(
+                n_estimators=200,
+                max_depth=10,
+                min_samples_split=5,
+                min_samples_leaf=2,
+                max_features="sqrt",
+                bootstrap=True,
+                random_state=42,
+            )
+            rf.fit(X, y)
+            feature_importance = pd.DataFrame(
+                {"Feature": X.columns, "Importance": rf.feature_importances_}
+            ).sort_values("Importance", ascending=False)
+            fig = px.bar(
+                feature_importance,
+                x="Importance",
+                y="Feature",
+                orientation="h",
+                title="Feature Importance (Random Forest)",
+                color="Importance",
+                color_continuous_scale="Viridis",
+            )
+            st.plotly_chart(fig, use_container_width=True)
+        except Exception as e:
+            st.error(f"Error in Random Forest feature importance: {str(e)}")
 
         # Correlation with target
-        st.subheader("Feature Correlation with Target")
-
-        target_corr = pd.DataFrame(abs(df.corr()["Potability"])).reset_index()
-        target_corr.columns = ["Feature", "Correlation"]
-        target_corr = target_corr[target_corr["Feature"] != "Potability"]
+        st.subheader("Correlation with Potability")
+        target_corr = pd.DataFrame(
+            abs(df.corr()["Potability"]), columns=["Correlation"]
+        ).reset_index()
+        target_corr = target_corr[target_corr["index"] != "Potability"]
         target_corr = target_corr.sort_values("Correlation", ascending=False)
-
         fig = px.bar(
             target_corr,
             x="Correlation",
-            y="Feature",
+            y="index",
             orientation="h",
             title="Absolute Correlation with Potability",
             color="Correlation",
-            color_continuous_scale="viridis",
+            color_continuous_scale="Viridis",
         )
-
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, use_container_width=True)
+    else:
+        st.error("Target column 'Potability' not found.")
 
     st.markdown("---")

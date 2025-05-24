@@ -1,64 +1,49 @@
 import streamlit as st
-from plotly.subplots import make_subplots
-import plotly.graph_objects as go
 
 
 def display_header():
-    """Display app header and introduction"""
+    """Display the app header and introduction."""
     st.title("Water Potability Analysis App")
     st.markdown(
         """
-    This app analyzes water quality parameters to predict potability using machine learning.
-    
-    * **Data source**: The dataset contains water quality metrics for determining potability
-    * **Goal**: Predict whether water is safe for consumption based on various features
-    * **Python libraries**: Pandas, NumPy, Seaborn, Matplotlib, Plotly, Scikit-learn, XGBoost
-    """
-    )
+        This app provides a comprehensive analysis of water quality to predict potability using machine learning.
 
+        **Key Features:**
+        - **Data Exploration**: Visualize raw data, statistics, and distributions.
+        - **Preprocessing**: Handle missing values, outliers, and feature scaling.
+        - **EDA**: Analyze feature relationships and correlations.
+        - **Modeling**: Train and evaluate multiple machine learning models.
+        - **Prediction**: Predict water potability for new samples.
+        - **Insights**: Gain actionable recommendations based on analysis.
+
+        **Dataset**: The dataset includes water quality metrics such as pH, Hardness, Solids, and Potability.
+        **Libraries**: Pandas, NumPy, Plotly, Scikit-learn, XGBoost.
+        """
+    )
     st.markdown("---")
 
 
 def conclusions_and_recommendations():
-    """Display conclusions and recommendations section"""
+    """Display conclusions and recommendations based on the analysis."""
     st.header("7. Conclusions and Recommendations")
-
-    st.write(
+    st.markdown(
         """
-    This water potability analysis app allows you to:
-    
-    1. **Explore water quality data** through comprehensive visual analysis
-    2. **Preprocess data** by handling missing values and outliers
-    3. **Build and evaluate machine learning models** to predict water potability
-    4. **Make predictions** on new water samples to determine potability
-    
-    **Key Findings:**
-    - Water quality parameters have complex relationships that influence potability
-    - Several machine learning models can effectively predict water potability
-    - Certain parameters have stronger influence on water potability than others
-    
-    **Recommendations:**
-    - Regularly monitor key water quality parameters identified as important by the model
-    - Use this tool as a preliminary screening method, but confirm with laboratory testing
-    - Collect more balanced data to improve model performance
-    - Consider adding more water quality parameters to enhance prediction accuracy
-    """
+        **Summary of Findings:**
+        - The dataset reveals complex relationships between water quality parameters and potability.
+        - Engineered features (e.g., pH-Hardness interaction) improve model performance.
+        - Random Forest and XGBoost models consistently perform well, with AUC scores above 0.7.
+        - Key features influencing potability include pH, Hardness, and Solids.
+
+        **Recommendations:**
+        - **Monitoring**: Prioritize regular testing of high-impact features identified by the model.
+        - **Validation**: Use this tool for preliminary screening, followed by laboratory confirmation.
+        - **Data Collection**: Gather more balanced data to enhance model accuracy.
+        - **Feature Expansion**: Consider adding new water quality parameters (e.g., microbial content) for better predictions.
+
+        **Next Steps:**
+        - Deploy this app in water treatment facilities for real-time analysis.
+        - Integrate with IoT devices for automated data collection.
+        - Explore ensemble methods to further improve prediction accuracy.
+        """
     )
-
     st.markdown("---")
-
-
-def display_outlier_boxplots(processed_df):
-    """Display boxplots to visualize outliers"""
-    fig = make_subplots(rows=3, cols=3, subplot_titles=list(processed_df.columns[:-1]))
-
-    row, col = 1, 1
-    for i, column in enumerate(processed_df.columns[:-1]):
-        fig.add_trace(go.Box(y=processed_df[column], name=column), row=row, col=col)
-        col += 1
-        if col > 3:
-            col = 1
-            row += 1
-
-    fig.update_layout(height=800, width=800, showlegend=False)
-    st.plotly_chart(fig)
