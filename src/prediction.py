@@ -1,62 +1,74 @@
 import streamlit as st
 import pandas as pd
-import plotly.graph_objects as go
 import joblib
 from pathlib import Path
+import plotly.express as px
+import plotly.graph_objects as go
 
 
 def prediction_interface(df):
     """Provide an interface for predicting water potability based on user inputs."""
-    st.header("6. Water Potability Prediction")
+    st.header("Water Potability Prediction")
 
-    if "Potability" not in df.columns:
-        st.error("Target column 'Potability' not found.")
+    # Define the EXACT features the model was trained on
+    original_features = [
+        "ph",
+        "Hardness",
+        "Solids",
+        "Chloramines",
+        "Sulfate",
+        "Conductivity",
+        "Organic_carbon",
+        "Trihalomethanes",
+        "Turbidity",
+    ]
+
+    # Check for required features
+    missing_features = [f for f in original_features if f not in df.columns]
+    if missing_features:
+        st.error(f"Missing required features: {', '.join(missing_features)}")
         return
 
-    X = df.drop("Potability", axis=1)
-
-    # Load pre-trained Random Forest model
+    # Load the model
     model_path = Path("models/best_random_forest_model.pkl")
     try:
-        if not model_path.exists():
-            st.error(f"Pre-trained model not found at: {model_path}")
-            return
         model = joblib.load(model_path)
-        st.success("Pre-trained Random Forest model loaded successfully.")
     except Exception as e:
         st.error(f"Error loading model: {str(e)}")
         return
 
-    # Input interface
+    # Create input sliders for ONLY the original features
     st.subheader("Enter Water Quality Parameters")
-    col1, col2 = st.columns(2)
     user_input = {}
 
-    try:
-        for i, column in enumerate(X.columns):
-            min_val = float(X[column].min())
-            max_val = float(X[column].max())
-            mean_val = float(X[column].mean())
-            with col1 if i % 2 == 0 else col2:
-                user_input[column] = st.slider(
-                    f"{column}:",
-                    min_value=min_val,
-                    max_value=max_val,
-                    value=mean_val,
-                    format="%.4f",
-                    key=f"slider_{column}",
-                )
-    except Exception as e:
-        st.error(f"Error creating input sliders: {str(e)}")
-        return
+    col1, col2 = st.columns(2)
+    for i, feature in enumerate(original_features):
+        with col1 if i % 2 == 0 else col2:
+            # Get feature statistics
+            min_val = float(df[feature].min())
+            max_val = float(df[feature].max())
+            mean_val = float(df[feature].mean())
 
-    # Prediction
+            user_input[feature] = st.slider(
+                f"{feature}:",
+                min_value=min_val,
+                max_value=max_val,
+                value=mean_val,
+                format="%.4f",
+                key=f"slider_{feature}",
+            )
+
+    # Prediction button
     if st.button("Predict Water Potability", key="predict_button"):
         try:
-            input_df = pd.DataFrame([user_input])
-            prediction = model.predict(input_df)
-            probability = model.predict_proba(input_df)
+            # Create input DataFrame with ONLY the original features
+            input_df = pd.DataFrame([user_input])[original_features]
 
+            # Make prediction
+            prediction = model.predict(input_df)
+            probability = model.predict_proba(input_df)[:, 1]
+
+            # Display results
             st.subheader("Prediction Result")
             if prediction[0] == 1:
                 st.success(
@@ -95,21 +107,27 @@ def prediction_interface(df):
             )
             st.plotly_chart(fig, use_container_width=True)
 
-            # Feature importance
-            st.subheader("Feature Contribution")
-            feature_imp = pd.DataFrame(
-                {"Feature": X.columns, "Importance": model.feature_importances_}
-            ).sort_values("Importance", ascending=False)
-            fig = px.bar(
-                feature_imp,
-                x="Importance",
-                y="Feature",
-                orientation="h",
-                title="Feature Importance for Prediction",
-                color="Importance",
-                color_continuous_scale="Viridis",
-            )
-            st.plotly_chart(fig, use_container_width=True)
+            # Feature importance (if available)
+            if hasattr(model, "feature_importances_"):
+                st.subheader("Feature Contribution")
+                feature_imp = pd.DataFrame(
+                    {
+                        "Feature": original_features,
+                        "Importance": model.feature_importances_,
+                    }
+                ).sort_values("Importance", ascending=False)
+
+                fig = px.bar(
+                    feature_imp,
+                    x="Importance",
+                    y="Feature",
+                    orientation="h",
+                    title="Feature Importance for Prediction",
+                    color="Importance",
+                    color_continuous_scale="Viridis",
+                )
+                st.plotly_chart(fig, use_container_width=True)
+
         except Exception as e:
             st.error(f"Error making prediction: {str(e)}")
 
