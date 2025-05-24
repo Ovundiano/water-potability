@@ -10,8 +10,8 @@ def prediction_interface(df):
     """Provide an interface for predicting water potability based on user inputs."""
     st.header("Water Potability Prediction")
 
-    # Define the EXACT features the model was trained on
-    original_features = [
+    # Define the EXACT features the model expects
+    model_features = [
         "ph",
         "Hardness",
         "Solids",
@@ -24,53 +24,50 @@ def prediction_interface(df):
     ]
 
     # Check for required features
-    missing_features = [f for f in original_features if f not in df.columns]
+    missing_features = [f for f in model_features if f not in df.columns]
     if missing_features:
         st.error(f"Missing required features: {', '.join(missing_features)}")
         return
 
-    # Load the model
+    # Load model
     model_path = Path("models/best_random_forest_model.pkl")
     try:
         model = joblib.load(model_path)
+        st.success("Model loaded successfully!")
     except Exception as e:
         st.error(f"Error loading model: {str(e)}")
         return
 
-    # Create input sliders for ONLY the original features
+    # Create input sliders
     st.subheader("Enter Water Quality Parameters")
     user_input = {}
 
     col1, col2 = st.columns(2)
-    for i, feature in enumerate(original_features):
+    for i, feature in enumerate(model_features):
         with col1 if i % 2 == 0 else col2:
-            # Get feature statistics
-            min_val = float(df[feature].min())
-            max_val = float(df[feature].max())
-            mean_val = float(df[feature].mean())
-
             user_input[feature] = st.slider(
                 f"{feature}:",
-                min_value=min_val,
-                max_value=max_val,
-                value=mean_val,
+                min_value=float(df[feature].min()),
+                max_value=float(df[feature].max()),
+                value=float(df[feature].mean()),
                 format="%.4f",
                 key=f"slider_{feature}",
             )
 
-    # Prediction button
-    if st.button("Predict Water Potability", key="predict_button"):
+    if st.button("Predict Water Potability", type="primary"):
         try:
-            # Create input DataFrame with ONLY the original features
-            input_df = pd.DataFrame([user_input])[original_features]
+            # Create input with ONLY the features model knows
+            input_df = pd.DataFrame([user_input])[model_features]
 
-            # Make prediction
-            prediction = model.predict(input_df)
-            probability = model.predict_proba(input_df)[:, 1]
+            # Make prediction - ensure proper handling of results
+            prediction = model.predict(input_df)[0]  # Get first prediction
+            probabilities = model.predict_proba(input_df)[
+                0
+            ]  # Get probabilities for first sample
 
             # Display results
             st.subheader("Prediction Result")
-            if prediction[0] == 1:
+            if prediction == 1:
                 st.success(
                     "POTABLE: This water is predicted to be safe for consumption! 🎉"
                 )
@@ -80,13 +77,15 @@ def prediction_interface(df):
                     "NOT POTABLE: This water is predicted to be unsafe for consumption! ⚠️"
                 )
 
-            st.write(f"Probability of being potable: {probability[0][1]:.4f}")
+            # Safely display probability
+            potable_prob = probabilities[1] if len(probabilities) > 1 else 0.5
+            st.write(f"Probability of being potable: {potable_prob:.4f}")
 
             # Gauge chart
             fig = go.Figure(
                 go.Indicator(
                     mode="gauge+number",
-                    value=probability[0][1],
+                    value=potable_prob,
                     domain={"x": [0, 1], "y": [0, 1]},
                     title={"text": "Probability of Potability"},
                     gauge={
@@ -112,7 +111,7 @@ def prediction_interface(df):
                 st.subheader("Feature Contribution")
                 feature_imp = pd.DataFrame(
                     {
-                        "Feature": original_features,
+                        "Feature": model_features,
                         "Importance": model.feature_importances_,
                     }
                 ).sort_values("Importance", ascending=False)
@@ -129,6 +128,5 @@ def prediction_interface(df):
                 st.plotly_chart(fig, use_container_width=True)
 
         except Exception as e:
-            st.error(f"Error making prediction: {str(e)}")
-
-    st.markdown("---")
+            st.error(f"Error during prediction: {str(e)}")
+            st.error("Please check your model and input data format.")
