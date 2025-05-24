@@ -172,7 +172,7 @@ def build_model(df):
         fig.add_shape(type="line", line=dict(dash="dash"), x0=0, x1=1, y0=0, y1=1)
         st.plotly_chart(fig, use_container_width=True)
 
-        # Feature importance (if available)
+        # Feature importance
         if hasattr(best_model, "feature_importances_"):
             st.subheader("Feature Importance")
             feature_imp = pd.DataFrame(

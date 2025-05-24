@@ -10,7 +10,6 @@ def prediction_interface(df):
     """Provide an interface for predicting water potability based on user inputs."""
     st.header("Water Potability Prediction")
 
-    # Define the EXACT features the model expects
     model_features = [
         "ph",
         "Hardness",
@@ -23,7 +22,6 @@ def prediction_interface(df):
         "Turbidity",
     ]
 
-    # Check for required features
     missing_features = [f for f in model_features if f not in df.columns]
     if missing_features:
         st.error(f"Missing required features: {', '.join(missing_features)}")
@@ -56,14 +54,9 @@ def prediction_interface(df):
 
     if st.button("Predict Water Potability", type="primary"):
         try:
-            # Create input with ONLY the features model knows
             input_df = pd.DataFrame([user_input])[model_features]
-
-            # Make prediction - ensure proper handling of results
-            prediction = model.predict(input_df)[0]  # Get first prediction
-            probabilities = model.predict_proba(input_df)[
-                0
-            ]  # Get probabilities for first sample
+            prediction = model.predict(input_df)[0]
+            probabilities = model.predict_proba(input_df)[0]
 
             # Display results
             st.subheader("Prediction Result")

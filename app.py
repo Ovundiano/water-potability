@@ -14,10 +14,8 @@ from src.visualization import display_header, conclusions_and_recommendations
 import os
 import sys
 
-# Ensure src directory is in the Python path
 sys.path.append(str(Path(__file__).parent / "src"))
 
-# Set page configuration for a professional look
 st.set_page_config(
     page_title="Water Potability Analysis",
     page_icon="💧",
@@ -34,7 +32,6 @@ if "processed_df" not in st.session_state:
 
 def main():
     """Main function to run the Streamlit app for water potability analysis."""
-    # Display header and introduction
     display_header()
 
     # Sidebar configuration
@@ -74,7 +71,6 @@ def main():
                 "Please upload a CSV file or select the example dataset."
             )
 
-    # Proceed only if data is loaded
     if st.session_state["df"] is not None:
         # Navigation menu
         page = st.sidebar.radio(
@@ -138,7 +134,5 @@ def main():
 
 
 if __name__ == "__main__":
-    # For Heroku deployment, use the PORT environment variable
     port = int(os.environ.get("PORT", 8501))
     main()
-    # Streamlit is run via Procfile, so no need to call st.run() here

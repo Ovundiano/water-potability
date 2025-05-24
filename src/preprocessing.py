@@ -16,15 +16,11 @@ def data_preprocessing(df):
     """
     st.header("2. Data Preprocessing")
 
-    # Create a copy to avoid modifying the original DataFrame
     processed_df = df.copy()
 
-    # --------------------
     # Feature Engineering
-    # --------------------
     st.subheader("Feature Engineering")
     try:
-        # Add engineered features from Feature_Engineering.ipynb
         processed_df["ph_Hardness"] = processed_df["ph"] * processed_df["Hardness"]
         processed_df["Solids_Chloramines"] = processed_df["Solids"] / (
             processed_df["Chloramines"] + 1e-6
@@ -43,9 +39,7 @@ def data_preprocessing(df):
             f"Feature engineering failed: {str(e)}. Proceeding without new features."
         )
 
-    # --------------------
     # Handle Missing Values
-    # --------------------
     st.subheader("Handling Missing Values")
     impute_method = st.radio(
         "Select imputation method for missing values:",
@@ -81,9 +75,7 @@ def data_preprocessing(df):
     except Exception as e:
         st.error(f"Error handling missing values: {str(e)}")
 
-    # --------------------
     # Outlier Handling
-    # --------------------
     st.subheader("Outlier Handling")
     outlier_method = st.radio(
         "Select method for handling outliers:",
@@ -129,9 +121,7 @@ def data_preprocessing(df):
     except Exception as e:
         st.error(f"Error handling outliers: {str(e)}")
 
-    # --------------------
     # Feature Scaling
-    # --------------------
     st.subheader("Feature Scaling")
     scaling_method = st.radio(
         "Select scaling method:",
@@ -157,9 +147,7 @@ def data_preprocessing(df):
     except Exception as e:
         st.error(f"Error scaling features: {str(e)}")
 
-    # --------------------
     # Save Processed Data
-    # --------------------
     try:
         output_path = Path("Data/water_potability_processed.csv")
         output_path.parent.mkdir(parents=True, exist_ok=True)

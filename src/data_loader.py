@@ -13,7 +13,6 @@ def load_data(file_path="Data/water_potability.csv"):
         pd.DataFrame or None: Loaded DataFrame if successful, None otherwise.
     """
     try:
-        # Check if file_path is a string (for default dataset) or a Streamlit UploadedFile
         if isinstance(file_path, str):
             data_path = Path(file_path)
             if not data_path.exists():
