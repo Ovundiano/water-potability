@@ -27,7 +27,6 @@ def prediction_interface(df):
         st.error(f"Missing required features: {', '.join(missing_features)}")
         return
 
-    # Load model
     model_path = Path("models/best_random_forest_model.pkl")
     try:
         model = joblib.load(model_path)
@@ -36,7 +35,6 @@ def prediction_interface(df):
         st.error(f"Error loading model: {str(e)}")
         return
 
-    # Create input sliders
     st.subheader("Enter Water Quality Parameters")
     user_input = {}
 
@@ -58,7 +56,6 @@ def prediction_interface(df):
             prediction = model.predict(input_df)[0]
             probabilities = model.predict_proba(input_df)[0]
 
-            # Display results
             st.subheader("Prediction Result")
             if prediction == 1:
                 st.success(
@@ -70,11 +67,9 @@ def prediction_interface(df):
                     "NOT POTABLE: This water is predicted to be unsafe for consumption! ⚠️"
                 )
 
-            # Safely display probability
             potable_prob = probabilities[1] if len(probabilities) > 1 else 0.5
             st.write(f"Probability of being potable: {potable_prob:.4f}")
 
-            # Gauge chart
             fig = go.Figure(
                 go.Indicator(
                     mode="gauge+number",
@@ -99,7 +94,6 @@ def prediction_interface(df):
             )
             st.plotly_chart(fig, use_container_width=True)
 
-            # Feature importance (if available)
             if hasattr(model, "feature_importances_"):
                 st.subheader("Feature Contribution")
                 feature_imp = pd.DataFrame(

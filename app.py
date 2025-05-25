@@ -23,7 +23,6 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Initialize session state for data persistence
 if "df" not in st.session_state:
     st.session_state["df"] = None
 if "processed_df" not in st.session_state:
@@ -34,11 +33,9 @@ def main():
     """Main function to run the Streamlit app for water potability analysis."""
     display_header()
 
-    # Sidebar configuration
     st.sidebar.title("Navigation")
     st.sidebar.markdown("Select a section to explore the water potability analysis.")
 
-    # Data source selection
     st.sidebar.header("1. Data Source")
     data_source = st.sidebar.radio(
         "Select data source:",
@@ -46,7 +43,6 @@ def main():
         key="data_source",
     )
 
-    # Load data
     if data_source == "Use example dataset":
         try:
             st.session_state["df"] = load_data()
@@ -72,7 +68,6 @@ def main():
             )
 
     if st.session_state["df"] is not None:
-        # Navigation menu
         page = st.sidebar.radio(
             "Go to:",
             [
@@ -87,12 +82,10 @@ def main():
             key="page_selector",
         )
 
-        # Preprocessing checkbox
         preprocess = st.sidebar.checkbox(
             "Apply preprocessing", value=True, key="preprocess_toggle"
         )
 
-        # Process data if needed
         if preprocess and page != "Data Overview":
             with st.spinner("Preprocessing data..."):
                 try:
@@ -108,7 +101,6 @@ def main():
         else:
             st.session_state["processed_df"] = st.session_state["df"].copy()
 
-        # Display selected page
         try:
             if page == "Data Overview":
                 data_overview(st.session_state["df"])

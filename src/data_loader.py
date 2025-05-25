@@ -20,10 +20,8 @@ def load_data(file_path="Data/water_potability.csv"):
                 return None
             df = pd.read_csv(data_path)
         else:
-            # Handle uploaded file
             df = pd.read_csv(file_path)
 
-        # Basic validation
         if df.empty:
             st.error("Loaded dataset is empty.")
             return None

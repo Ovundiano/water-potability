@@ -23,7 +23,6 @@ def build_model(df):
     X = df.drop("Potability", axis=1)
     y = df["Potability"]
 
-    # Train-test split
     st.subheader("Train-Test Split")
     test_size = (
         st.slider(
@@ -47,7 +46,6 @@ def build_model(df):
         st.error(f"Error splitting data: {str(e)}")
         return
 
-    # Model selection
     st.subheader("Model Selection")
     models = {
         "Logistic Regression": LogisticRegression(max_iter=1000, random_state=42),
@@ -77,7 +75,6 @@ def build_model(df):
         st.warning("Please select at least one model.")
         return
 
-    # Cross-validation
     st.subheader("Cross-Validation Results")
     cv_folds = st.slider(
         "Select number of CV folds:",
@@ -117,7 +114,6 @@ def build_model(df):
         st.error(f"Error in cross-validation: {str(e)}")
         return
 
-    # Best model evaluation
     st.subheader("Best Model Evaluation")
     best_model_name = st.selectbox(
         "Select model for detailed evaluation:",
@@ -131,7 +127,6 @@ def build_model(df):
         y_pred = best_model.predict(X_test)
         y_pred_proba = best_model.predict_proba(X_test)[:, 1]
 
-        # Performance metrics
         col1, col2 = st.columns(2)
         with col1:
             st.metric("Accuracy", f"{accuracy_score(y_test, y_pred):.4f}")
@@ -140,12 +135,10 @@ def build_model(df):
             st.metric("Recall", f"{recall_score(y_test, y_pred):.4f}")
             st.metric("F1 Score", f"{f1_score(y_test, y_pred):.4f}")
 
-        # Classification report
         st.subheader("Classification Report")
         cr = classification_report(y_test, y_pred, output_dict=True)
         st.dataframe(pd.DataFrame(cr).transpose(), use_container_width=True)
 
-        # Confusion matrix
         st.subheader("Confusion Matrix")
         cm = confusion_matrix(y_test, y_pred)
         fig = px.imshow(
@@ -159,7 +152,6 @@ def build_model(df):
         )
         st.plotly_chart(fig, use_container_width=True)
 
-        # ROC Curve
         st.subheader("ROC Curve")
         fpr, tpr, _ = roc_curve(y_test, y_pred_proba)
         roc_auc = auc(fpr, tpr)
@@ -172,7 +164,6 @@ def build_model(df):
         fig.add_shape(type="line", line=dict(dash="dash"), x0=0, x1=1, y0=0, y1=1)
         st.plotly_chart(fig, use_container_width=True)
 
-        # Feature importance
         if hasattr(best_model, "feature_importances_"):
             st.subheader("Feature Importance")
             feature_imp = pd.DataFrame(

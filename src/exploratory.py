@@ -12,12 +12,10 @@ def data_overview(df):
     """Display an overview of the dataset with basic statistics and visualizations."""
     st.header("1. Data Overview")
 
-    # Raw data explorer
     with st.expander("View Raw Data", expanded=False):
         st.subheader("Raw Data")
         st.dataframe(df)
 
-    # Data information
     st.subheader("Data Information")
     col1, col2 = st.columns(2)
 
@@ -53,7 +51,6 @@ def data_overview(df):
         else:
             st.warning("Target column 'Potability' not found.")
 
-    # Summary statistics
     st.subheader("Summary Statistics")
     st.dataframe(df.describe())
     st.markdown("---")
@@ -63,7 +60,6 @@ def exploratory_data_analysis(df):
     """Perform exploratory data analysis with visualizations."""
     st.header("3. Exploratory Data Analysis")
 
-    # Feature distribution
     st.subheader("Feature Distributions")
     selected_feature = st.selectbox(
         "Select feature to visualize:", df.columns[:-1], key="feature_dist_select"
@@ -82,7 +78,6 @@ def exploratory_data_analysis(df):
     )
     st.plotly_chart(fig, use_container_width=True)
 
-    # Correlation analysis
     st.subheader("Correlation Analysis")
     corr_matrix = df.corr()
     fig = px.imshow(
@@ -93,7 +88,6 @@ def exploratory_data_analysis(df):
     )
     st.plotly_chart(fig, use_container_width=True)
 
-    # Feature vs Potability
     if "Potability" in df.columns:
         st.subheader("Feature Relationships with Potability")
         selected_features = st.multiselect(
@@ -115,7 +109,6 @@ def exploratory_data_analysis(df):
             )
             st.plotly_chart(fig, use_container_width=True)
 
-        # Statistical significance
         with st.expander("Statistical Significance (T-tests)", expanded=False):
             results = []
             for col in df.columns[:-1]:
@@ -127,7 +120,6 @@ def exploratory_data_analysis(df):
                 pd.DataFrame(results).sort_values("p-value"), use_container_width=True
             )
 
-    # Pairplot
     with st.expander("Pairwise Feature Relationships", expanded=False):
         selected_cols = st.multiselect(
             "Select features for pairplot (max 4 recommended):",
@@ -161,7 +153,6 @@ def feature_importance_analysis(df):
         X = df.drop("Potability", axis=1)
         y = df["Potability"]
 
-        # Random Forest feature importance
         st.subheader("Random Forest Feature Importance")
         try:
             rf = RandomForestClassifier(
@@ -190,7 +181,6 @@ def feature_importance_analysis(df):
         except Exception as e:
             st.error(f"Error in Random Forest feature importance: {str(e)}")
 
-        # Correlation with target
         st.subheader("Correlation with Potability")
         target_corr = pd.DataFrame(
             abs(df.corr()["Potability"]), columns=["Correlation"]
