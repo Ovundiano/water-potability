@@ -25,7 +25,7 @@ def display_header():
 
 def conclusions_and_recommendations():
     """Display conclusions and recommendations based on the analysis."""
-    st.header("7. Conclusions and Recommendations")
+    st.header("Conclusions and Recommendations")
     st.markdown(
         """
         **Summary of Findings:**

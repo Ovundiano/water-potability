@@ -15,7 +15,7 @@ def data_preprocessing(df, session_id=""):
     Returns:
         pd.DataFrame: Processed DataFrame
     """
-    st.header("2. Data Preprocessing")
+    st.header("Data Preprocessing")
 
     processed_df = df.copy()
 

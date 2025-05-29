@@ -14,7 +14,7 @@ from xgboost import XGBClassifier
 
 def build_model(df):
     """Build and evaluate machine learning models for water potability prediction."""
-    st.header("5. Model Building and Evaluation")
+    st.header("Model Building and Evaluation")
 
     if "Potability" not in df.columns:
         st.error("Target column 'Potability' not found.")

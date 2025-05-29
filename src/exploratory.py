@@ -10,7 +10,7 @@ from scipy import stats
 
 def data_overview(df):
     """Display an overview of the dataset with basic statistics and visualizations."""
-    st.header("1. Data Overview")
+    st.header("Data Overview")
 
     with st.expander("View Raw Data", expanded=False):
         st.subheader("Raw Data")
@@ -58,7 +58,7 @@ def data_overview(df):
 
 def exploratory_data_analysis(df):
     """Perform exploratory data analysis with visualizations."""
-    st.header("3. Exploratory Data Analysis")
+    st.header("Exploratory Data Analysis")
 
     st.subheader("Feature Distributions")
     selected_feature = st.selectbox(
@@ -147,7 +147,7 @@ def exploratory_data_analysis(df):
 
 def feature_importance_analysis(df):
     """Analyze feature importance using Random Forest and correlation."""
-    st.header("4. Feature Importance Analysis")
+    st.header("Feature Importance Analysis")
 
     if "Potability" in df.columns:
         X = df.drop("Potability", axis=1)
