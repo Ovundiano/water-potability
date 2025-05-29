@@ -34,7 +34,6 @@ if "session_id" not in st.session_state:
 
 def main():
     """Main function to run the Streamlit app for water potability analysis."""
-    display_header()
 
     st.sidebar.title("Navigation")
     st.sidebar.markdown("Select a section to explore the water potability analysis.")
@@ -85,13 +84,26 @@ def main():
             key="page_selector",
         )
 
-        preprocess = st.sidebar.checkbox(
-            "Apply preprocessing", value=True, key="preprocess_toggle"
-        )
+        if page == "Conclusions and Recommendations":
+            conclusions_and_recommendations()
+            return
+
+        display_header()
+
+        if page not in ["Data Overview", "Data Preprocessing"]:
+            preprocess = st.sidebar.checkbox(
+                "Apply preprocessing", value=True, key="preprocess_toggle"
+            )
+        else:
+            preprocess = False
 
         session_id = st.session_state["session_id"]
 
-        if preprocess and page != "Data Overview":
+        if preprocess and page not in [
+            "Data Overview",
+            "Data Preprocessing",
+            "Conclusions and Recommendations",
+        ]:
             with st.spinner("Preprocessing data..."):
                 try:
                     st.session_state["processed_df"] = data_preprocessing(
@@ -121,8 +133,6 @@ def main():
                 build_model(st.session_state["processed_df"])
             elif page == "Prediction Interface":
                 prediction_interface(st.session_state["processed_df"])
-            elif page == "Conclusions and Recommendations":
-                conclusions_and_recommendations()
         except Exception as e:
             st.error(f"An error occurred while rendering the page: {str(e)}")
             st.markdown("Please check the dataset and try again.")
