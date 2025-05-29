@@ -13,6 +13,7 @@ from src.prediction import prediction_interface
 from src.visualization import display_header, conclusions_and_recommendations
 import os
 import sys
+import uuid
 
 sys.path.append(str(Path(__file__).parent / "src"))
 
@@ -27,6 +28,8 @@ if "df" not in st.session_state:
     st.session_state["df"] = None
 if "processed_df" not in st.session_state:
     st.session_state["processed_df"] = None
+if "session_id" not in st.session_state:
+    st.session_state["session_id"] = str(uuid.uuid4())[:8]
 
 
 def main():
@@ -86,11 +89,13 @@ def main():
             "Apply preprocessing", value=True, key="preprocess_toggle"
         )
 
+        session_id = st.session_state["session_id"]
+
         if preprocess and page != "Data Overview":
             with st.spinner("Preprocessing data..."):
                 try:
                     st.session_state["processed_df"] = data_preprocessing(
-                        st.session_state["df"]
+                        st.session_state["df"], session_id=f"{session_id}_sidebar"
                     )
                     if st.session_state["processed_df"] is not None:
                         st.sidebar.success("Data preprocessing completed!")
@@ -106,7 +111,7 @@ def main():
                 data_overview(st.session_state["df"])
             elif page == "Data Preprocessing":
                 st.session_state["processed_df"] = data_preprocessing(
-                    st.session_state["df"]
+                    st.session_state["df"], session_id=f"{session_id}_main"
                 )
             elif page == "Exploratory Data Analysis":
                 exploratory_data_analysis(st.session_state["processed_df"])

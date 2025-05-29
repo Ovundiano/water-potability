@@ -17,13 +17,10 @@ def data_preprocessing(df, session_id=""):
     """
     st.header("2. Data Preprocessing")
 
-    # Create a copy of the original dataframe
     processed_df = df.copy()
 
-    # Check if Potability column exists
     target_present = "Potability" in processed_df.columns
 
-    # Feature Engineering
     st.subheader("Feature Engineering")
     try:
         processed_df["ph_Hardness"] = processed_df["ph"] * processed_df["Hardness"]
@@ -44,10 +41,8 @@ def data_preprocessing(df, session_id=""):
             f"Feature engineering failed: {str(e)}. Proceeding without new features."
         )
 
-    # Handle Missing Values
     st.subheader("Handling Missing Values")
 
-    # Show missing values summary before processing
     missing_values = processed_df.isna().sum()
     if missing_values.sum() > 0:
         st.write("Missing values before handling:")
@@ -56,7 +51,6 @@ def data_preprocessing(df, session_id=""):
         st.info("No missing values found in the dataset.")
         return processed_df
 
-    # Create unique keys by combining purpose with session_id
     impute_key = f"missing_values_impute_method_{session_id}"
 
     impute_method = st.radio(
@@ -124,7 +118,6 @@ def data_preprocessing(df, session_id=""):
                         processed_df[column].fillna(custom_val, inplace=True)
             st.success("Missing values filled with custom values.")
 
-        # Verify missing values were handled
         remaining_missing = processed_df.isna().sum().sum()
         if remaining_missing > 0:
             st.warning(
@@ -139,7 +132,6 @@ def data_preprocessing(df, session_id=""):
         st.error(f"Error handling missing values: {str(e)}")
         return df
 
-    # Outlier Handling
     st.subheader("Outlier Handling")
     outlier_key = f"outlier_handling_method_{session_id}"
 
@@ -193,7 +185,6 @@ def data_preprocessing(df, session_id=""):
     except Exception as e:
         st.error(f"Error handling outliers: {str(e)}")
 
-    # Feature Scaling
     st.subheader("Feature Scaling")
     scaling_key = f"feature_scaling_method_{session_id}"
 
@@ -233,7 +224,6 @@ def data_preprocessing(df, session_id=""):
     except Exception as e:
         st.error(f"Error scaling features: {str(e)}")
 
-    # Save Processed Data
     try:
         output_path = Path("data/water_potability_processed.csv")
         output_path.parent.mkdir(parents=True, exist_ok=True)
