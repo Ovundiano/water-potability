@@ -104,7 +104,26 @@ Contains several sections providing a comprehensive introduction to the app’s 
 - **Dataset Types**: Displays the dataset types to enable users grasp the scope of data.
 - **Target Distribution**: Presents a pie chart percentage of potable and not potable water.
 - **Summary Statistics**: Presents summary statistics (e.g., mean, count, std, min, max etc) for numeric columns, providing insights into the data’s variability.
+- **README Link**: Offers a link to the project’s README for in-depth methodologies and findings.
+
 
 ![analysis-page](readme_images\overview-1.png)
 ![analysis-page](readme_images\overview-2.png)
 ![analysis-page](readme_images\overview-3.png)
+
+### Page 2 - Data Preprocessing
+
+Contains several sections outlining the project’s missing values the handling methods.
+- **Imputation Handling**: Provide buttons for selecting imputation methods which are mean, median, drop rows and custom value.
+- **Outlier Handling**: Provide buttons to select method for handling outliers.
+- **Feature Scaling**: Provide buttons to select scaling method.
+- **README Link**: Offers a link to the project’s README for in-depth methodologies and findings.
+
+![analysis-page](readme_images\preprocessing-1.png)
+
+![analysis-page](readme_images\preprocessing-2.png)
+
+![analysis-page](readme_images\preprocessing-3.png)
+
+
+
