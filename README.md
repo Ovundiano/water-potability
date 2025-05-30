@@ -13,9 +13,11 @@ This Streamlit-based application provides an end-to-end solution for water quali
 This is the Milestone Project for Predictive Analytics section of the Full Stack Developer Course taught through Code Institute
 ***
 
+
 ## Dataset Content
 
 * The dataset for this project is sourced from **[Kaggle](https://www.kaggle.com/code/nimapourmoradi/water-potability)**.
+
 * The dataset for this project uses water quality data with 3,276 samples, covering 9 physicochemical properties (e.g., pH, chloramines, turbidity) and a binary potability label. It includes measurements like hardness (mg/L) and total dissolved solids (ppm), with some missing values handled during preprocessing. The data helps predict drinkability and identify contamination risks, though it excludes microbial testing. Ideal for public health research and water safety monitoring.
 
 ***
@@ -31,4 +33,30 @@ This is the Milestone Project for Predictive Analytics section of the Full Stack
 |Target Variable|Potability (0=Unsafe, 1=Safe)|Binary|WHO drinking water standards.|
 ***
 
+### Data Characteristics
 
+* Temporal Coverage: Single snapshot (timestamps optional if your data includes them).
+
+* Missing Values:
+    * ph (15% missing), Sulfate (24% missing), Trihalomethanes (5% missing).
+    * Handled via imputation or deletion in preprocessing.py.
+
+* Class Distribution:
+    * Potable (Safe): 61% of samples.
+    * Non-Potable: 39% of samples.
+
+
+## Business Requirements
+
+* *For clarity, this is an education-based project, and the organization described is for illustrative purposes.*
+
+* **AquaSafe Analytics**, a water quality consultancy, faces challenges in helping governments and NGOs monitor drinking water safety efficiently. Currently, analysts manually assess water quality reports from disparate sources, spending hours compiling data to identify contamination risks and compliance with safety standards. This slow, error-prone process delays critical interventions, especially in regions with aging infrastructure or environmental stressors. With varying water quality challenges across urban and rural areas, a scalable solution is needed to standardize assessments and predict potability in real time.
+
+* **AquaSafe Analytics** has requested a user-friendly, cost-effective tool to automate water quality analysis. During planning, the data science team proposed a Streamlit-based application leveraging interactive visualizations, statistical analysis, and machine learning. This solution would enable:
+   * Rapid identification of unsafe water sources using key metrics (pH, turbidity, chemical levels).
+
+   * Predictive modeling to flag high-risk areas before contamination spreads.
+
+   * Data-driven recommendations for infrastructure upgrades or treatment interventions.
+
+* The tool’s success could extend to global datasets or integrate with IoT sensors for live monitoring.
