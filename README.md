@@ -107,9 +107,9 @@ Contains several sections providing a comprehensive introduction to the app’s 
 - **README Link**: Offers a link to the project’s README for in-depth methodologies and findings.
 
 
-![analysis-page](readme_images\overview-1.png)
-![analysis-page](readme_images\overview-2.png)
-![analysis-page](readme_images\overview-3.png)
+![analysis-page](readme_images/overview-1.png)
+![analysis-page](readme_images/overview-2.png)
+![analysis-page](readme_images/overview-3.png)
 
 ### Page 2 - Data Preprocessing
 
@@ -119,11 +119,13 @@ Contains several sections outlining the project’s missing values the handling 
 - **Feature Scaling**: Provide buttons to select scaling method.
 - **README Link**: Offers a link to the project’s README for in-depth methodologies and findings.
 
-![analysis-page](readme_images\preprocessing-1.png)
+![analysis-page](readme_images/preprocessing-1.png)
 
-![analysis-page](readme_images\preprocessing-2.png)
+![analysis-page](readme_images/preprocessing-2.png)
 
-![analysis-page](readme_images\preprocessing-3.png)
+![analysis-page](readme_images/preprocessing-3.png)
+
+### Page 3 - Exploratory Data Analysis
 
 
 
