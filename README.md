@@ -88,3 +88,23 @@ This is the Milestone Project for Predictive Analytics section of the Full Stack
 
 * The model is trained on the Kaggle Water Potability Dataset, containing 3,276 samples with 9 physicochemical features. Global coverage (urban/rural, diverse water sources) and Missing data: Handled via imputation during preprocessing.
 
+
+## Dashboard Design - Streamlit app
+
+### Data Source
+
+* You can use the example dataset or upload your own dataset depending on your preference.
+
+### Page 1 - Data Overview
+
+Contains several sections providing a comprehensive introduction to the app’s purpose and the underlying dataset:
+
+- **Quick Project Summary**: A concise overview of what the project entails and its key features.
+- **Dataset**: The dataset includes water quality metrics such as pH, Hardness, Solids, and Potability. 
+- **Dataset Types**: Displays the dataset types to enable users grasp the scope of data.
+- **Target Distribution**: Presents a pie chart percentage of potable and not potable water.
+- **Summary Statistics**: Presents summary statistics (e.g., mean, count, std, min, max etc) for numeric columns, providing insights into the data’s variability.
+
+![analysis-page](readme_images\overview-1.png)
+![analysis-page](readme_images\overview-2.png)
+![analysis-page](readme_images\overview-3.png)
