@@ -118,6 +118,7 @@ Contains several sections outlining the project’s missing values the handling 
 - **Outlier Handling**: Provide buttons to select method for handling outliers.
 - **Feature Scaling**: Provide buttons to select scaling method.
 - **README Link**: Offers a link to the project’s README for in-depth methodologies and findings.
+- **Data Preprocessing details is found in other pages of the streamlit app.**
 
 ![analysis-page](readme_images/preprocessing-1.png)
 
@@ -127,5 +128,22 @@ Contains several sections outlining the project’s missing values the handling 
 
 ### Page 3 - Exploratory Data Analysis
 
+Contains interactive sections for analyzing datasets and potability of water for consumption:
 
+- **Feature Distribution**: A histogram and box plot section that displays the distributions of dataset.
+- **Correlation Analysis**: A matrix that correlates datasets features.
+- **Statistical Significance (T-tests)**: A table that has dataset features and p-value.
+- **Feature Relationships with Potability**: Allows users to select features to compare with potability.
+- **Pairwise Feature Relationships**: Select features for pairplot maximum of 4 features recommended for pairing.
+- **README Link**: Offers a link to the project’s README for in-depth methodologies and findings.
+
+![analysis-page](readme_images/explore-1.png)
+
+![analysis-page](readme_images/explore-2.png)
+
+![analysis-page](readme_images/explore-3.png)
+
+![analysis-page](readme_images/explore-4.png)
+
+![analysis-page](readme_images/explore-5.png)
 
