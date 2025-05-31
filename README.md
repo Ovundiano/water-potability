@@ -147,3 +147,11 @@ Contains interactive sections for analyzing datasets and potability of water for
 
 ![analysis-page](readme_images/explore-5.png)
 
+### Page 4 - Feature Importance Analysis
+- **Random Forest Feature Importance**: Contains a section correlates dataset features importance in Random forest.
+- **README Link**: Offers a link to the project’s README for in-depth methodologies and findings.
+
+![model-page](readme_images/importance.png)
+
+
+
