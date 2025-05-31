@@ -155,7 +155,7 @@ This section analyze feature importance using Random Forest and correlation:
 - **Random Forest Feature Importance**: Contains a section that correlates dataset features importance in Random forest.
 - **README Link**: Offers a link to the project’s README for in-depth methodologies and findings.
 
-![model-page](readme_images/importance.png)
+![analysis-page](readme_images/importance.png)
 
 ### Page 5 - Model Building and Evaluation
 
@@ -184,4 +184,23 @@ This section builds and evaluate machine learning models for water potability pr
 ![forecasting-page](readme_images/model-7.png)
 
 ![forecasting-page](readme_images/model-8.png)
+
+### Page 6 - Prediction Interface
+
+This section provides an interface for predicting water potability based on user inputs.
+
+- **Enter Water Quality Parameters**: Sliders of model features parameters to predict potability and not potability.
+- **Predict Water Potability**: Prediction result from parameters entered in sliders to know if prediction is potable or not potable.
+- **README Link**: Offers a link to the project’s README for in-depth methodologies and findings.
+
+![prediction-page](readme_images/prediction-1.png)
+
+![prediction-page](readme_images/prediction-2.png)
+
+![prediction-page](readme_images/prediction-3.png)
+
+![prediction-page](readme_images/prediction-4.png)
+
+
+
 
