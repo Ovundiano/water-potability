@@ -201,6 +201,13 @@ This section provides an interface for predicting water potability based on user
 
 ![prediction-page](readme_images/prediction-4.png)
 
+### Page 7 - Conclusions and Recommendations
+
+Display conclusions and recommendations based on the analysis:
+
+- **Summary of Findings**: Summarizes complex relationships between water quality parameters and potability, Random Forest and XGBoost models consistently perform well, with AUC scores above 0.7, key features influencing potability include pH, Hardness, and Solids and Engineered features improve model performance.
+- **Recommendations**: Recommends strategies on Monitoring, Validation, Data Collection and Feature Expansion.
+- **Next Steps**: Gives insights on further actions to take.
 
 
 
