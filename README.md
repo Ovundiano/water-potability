@@ -113,7 +113,8 @@ Contains several sections providing a comprehensive introduction to the app’s 
 
 ### Page 2 - Data Preprocessing
 
-Contains several sections outlining the project’s missing values the handling methods.
+This section handles data preprocessing including missing values, outliers, feature engineering, and scaling.
+
 - **Imputation Handling**: Provide buttons for selecting imputation methods which are mean, median, drop rows and custom value.
 - **Outlier Handling**: Provide buttons to select method for handling outliers.
 - **Feature Scaling**: Provide buttons to select scaling method.
@@ -128,7 +129,7 @@ Contains several sections outlining the project’s missing values the handling 
 
 ### Page 3 - Exploratory Data Analysis
 
-Contains interactive sections for analyzing datasets and potability of water for consumption:
+This section performs exploratory data analysis with visualizations:
 
 - **Feature Distribution**: A histogram and box plot section that displays the distributions of dataset.
 - **Correlation Analysis**: A matrix that correlates datasets features.
@@ -148,10 +149,39 @@ Contains interactive sections for analyzing datasets and potability of water for
 ![analysis-page](readme_images/explore-5.png)
 
 ### Page 4 - Feature Importance Analysis
-- **Random Forest Feature Importance**: Contains a section correlates dataset features importance in Random forest.
+
+This section analyze feature importance using Random Forest and correlation:
+
+- **Random Forest Feature Importance**: Contains a section that correlates dataset features importance in Random forest.
 - **README Link**: Offers a link to the project’s README for in-depth methodologies and findings.
 
 ![model-page](readme_images/importance.png)
 
+### Page 5 - Model Building and Evaluation
 
+This section builds and evaluate machine learning models for water potability prediction:
+
+- **Train-Test Split**: A slider to select test set size in a scale of 10 to 40 in percentage.
+- **Model Selection**: A dropdown list that gives options to select models to evaluate.
+- **Cross-Validation Results**: Result of selected models evaluated in tabular and bar chart form.
+- **Best Model Evaluation**: A dropdown list that gives options to select models for detailed evaluation.
+- **Confusion Matrix**: A chart of actual versus predicted potable and not potable water.
+- **ROC Curve**
+- **README Link**: Offers a link to the project’s README for in-depth methodologies and findings.
+
+![forecasting-page](readme_images/model-1.png)
+
+![forecasting-page](readme_images/model-2.png)
+
+![forecasting-page](readme_images/model-3.png)
+
+![forecasting-page](readme_images/model-4.png)
+
+![forecasting-page](readme_images/model-5.png)
+
+![forecasting-page](readme_images/model-6.png)
+
+![forecasting-page](readme_images/model-7.png)
+
+![forecasting-page](readme_images/model-8.png)
 
