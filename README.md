@@ -269,3 +269,67 @@ Pillow==10.0.1
 ### 2. Navigate Pages:
 - Use the sidebar to select pages: Data Overview, Data Preprocessing, Exploratory Data Analysis, Feature Importance Analysis, Model Building and Evaluation, Prediction Interface or Conclusions and Recommendations.
 
+
+## Deployment - Using Github and Heroku
+
+### Cloning the Repository
+
+* On Github navigate to the repository "<https://github.com/Ovundiano/water-potability?tab=readme-ov-file>"
+* Click "Code" drop down menu - a green button shown right above the file list.
+* Copy the URL of the repository using "HTTPS", "SSH" or "Github CLI".
+* Open Git Bash.
+* Change the current working directory to the location where you want the cloned directory.
+* Type "git clone", and then paste the URL copied earlier.
+* Press enter to create local clone. A clone of the repository will now be created.
+
+* For more details on how to clone the repository in order to create a copy for own use refer to the site:
+[Cloning a Repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
+
+### Forking a Repository
+
+* On Github navigate to the repository "<https://github.com/Ovundiano/water-potability?tab=readme-ov-file>"
+* Click "Fork" located towards top right corner on GitHub page.
+* Select "owner" for the forked repository from the dropdown menu under "owner".
+* It will create forked repo under the same name as original by default. But you can type a name in "Repository name" or add a description in "Description" box.
+* Click on "Create fork". A forked repo is created.
+
+#### Important Information about forking a repository
+
+* Forking allows you to make any changes without affecting original project. You can send the suggestions by submitting a pull request. Then the Project Owner can review the pull request before accepting the suggestions and merging them.
+* When you have fork to a repository, you don't have access to files locally on your device, for getting access you will need to clone the forked repository.
+* For more details on how to fork the repo, in order to for example suggest any changes to the project you can:
+[Forking a Repository](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
+
+### Deploying the app - Heroku
+
+* Set the runtime.txt Python version to a [Heroku-20](https://devcenter.heroku.com/articles/python-support#supported-runtimes) stack currently supported version.
+
+* **Important information for running an older version of python:**
+
+  * If an error occurs when deploying stating that the Python version is not available, it is probably due to the stack used for the application. To fix this, log in to the Heroku command line interface (CLI) and use the following command to set the stack to Heroku-20.
+
+    * heroku stack:set heroku-20 -a your-app-name
+      * In this case the your-app-name is **water-potability**
+
+* The app is deployed from Heroku using the following steps:
+  * Create Heroku account.
+  * In the top right, click 'New'.
+  * Click 'Create new app'.
+  * Give your app a name and select your region from drop down.
+  * Click 'Create new app'.
+  * Select 'Deploy' tab at the top.
+  * Select 'Github' from 'Deployment method'.
+  * Type the name given to your project in Github and click 'search'.
+  * Scroll down and select Manual deployment method.
+  * You can also use Auto deployment method to allow the project to update every time you push the code.
+  * You can now click to view the app ready and running.
+  * If the slug size is too large, then add large files not required for the app to run to the .slugignore file.
+
+  #### Important Information about forking a repository - Heorku
+
+* The web application is displayed and deployed using template provided by Code Institute to test the code.
+* For this project I used Manual deployment method to deploy the current state of the branch, every time I pushed the code from VS code.
+
+* The App live link: [Link to live Streamlit app]()
+
+---  
