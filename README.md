@@ -270,6 +270,45 @@ Pillow==10.0.1
 - Use the sidebar to select pages: Data Overview, Data Preprocessing, Exploratory Data Analysis, Feature Importance Analysis, Model Building and Evaluation, Prediction Interface or Conclusions and Recommendations.
 
 
+## Bugs and Testing
+
+### Known Bugs and Issues
+
+1. **Machine Learning Prediction Errors:**   
+   - **Issue:** Invalid numeric inputs in the prediction interface (e.g., null values for some features) may cause errors.
+   - **Workaround:** Enter valid values based on feature ranges.
+   - **Status:** Planned input validation for numeric fields.
+
+
+### Testing Approach
+
+ The application has been rigorously tested to ensure reliability and usability: 
+
+ 1. **Unit Tests:**
+   - Tested functions in data_loader.py, exploratory.py, modeling.py, prediction.py, preprocessing.py and visualizations.py for data overview, data preprocessing, exploratory data analysis, model building and evaluation and prediction interface.
+
+  2. **Test Coverage:**
+   - Achieved ~80% coverage of core functions, focusing on critical paths (data loading, preprocessing, Prediction Interface).
+   - Ongoing: Adding tests for edge cases in visualization functions.
+
+  3. **Manual Testing:** 
+   - Tested UI rendering, error messages, and download functionality across browsers (Chrome, Microsoft edge) and devices (desktop, mobile). 
+
+  ![Heroku-page]()
+
+  4. **Deployment Testing:**
+   - Deployed on Heroku to verify performance and accessibility.
+
+  ![Heroku-page]()
+
+
+## User-Story
+
+| ![user-story]() | ![user-story]() |
+|:-------------------------------------------:|:-------------------------------------------:|
+| **Kanban board** | **Kanban Issue** |
+
+
 ## Deployment - Using Github and Heroku
 
 ### Cloning the Repository
@@ -388,4 +427,3 @@ This is a list of technologies I used while building this site:
  -  [Code Institute](https://codeinstitute.net/) tutors and Slack community members for their support and help.
  -  [Ebuka-martins](https://github.com/Ebuka-martins) my friend who has been very supportive to me throughout the journey of the project.
 
- 
