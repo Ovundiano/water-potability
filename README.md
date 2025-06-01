@@ -258,3 +258,14 @@ Pillow==10.0.1
   streamlit run app.py
   The app will open in your default browser at http://localhost:8501.
 ```
+
+
+## Usage
+
+### 1. Access the App:
+- Locally: Run `streamlit run app.py` and navigate to `http://localhost:8501.`
+- Deployed: Visit the Heroku app URL ``.
+
+### 2. Navigate Pages:
+- Use the sidebar to select pages: Data Overview, Data Preprocessing, Exploratory Data Analysis, Feature Importance Analysis, Model Building and Evaluation, Prediction Interface or Conclusions and Recommendations.
+
