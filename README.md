@@ -333,3 +333,42 @@ Pillow==10.0.1
 * The App live link: [Link to live Streamlit app]()
 
 ---  
+
+
+## Technologies
+
+### Languages
+
+This is a list of technologies I used while building this site:
+***
+- [![Python](https://img.shields.io/badge/Python-darkblue?logo=python&logoColor=BA8E23)](https://www.python.org/) The primary programming language used for data processing and machine learning tasks.
+- Markdown - Creating the readme and adding information to the Jupyter notebooks.
+
+### Platforms
+- [![Vscode](https://img.shields.io/badge/Vscode-blue?logo=vscode&logoColor=FF0000)](https://vscode.io) used as a cloud-based IDE for development.
+- [![GitHub](https://img.shields.io/badge/GitHub-grey?logo=github&logoColor=181717)](https://github.com) used for secure online code storage.
+- [![Heroku](https://img.shields.io/badge/Heroku-purple?logo=heroku&logoColor=A020F0)](https://www.heroku.com/) Used to deploy the project.
+- [![Jupyter Notebooks](https://img.shields.io/badge/jupyter-red?logo=jupyter&logoColor=FF0000)](https://www.jupyter.com/)  For development, experimentation, and visualization of code and results, inside Vscode.
+
+### Resources
+- [![Git](https://img.shields.io/badge/Git-grey?logo=git&logoColor=F05032)](https://git-scm.com) used for version control. (`git add`, `git commit`, `git push`)
+- [![Code Institute](https://img.shields.io/badge/Code-Institute-orange?logo=code-institute&logoColor=orange)](https://codeinstitute.net/global/) Gitpod Template - to generate the workspace for the project.
+- [![Kaggle](https://img.shields.io/badge/Kaggle-blue?logo=kaggle&logoColor=ff0000)](https://kaggle.com/) Dataset hosting site, including the dataset used for this project.
+
+### Libraries
+- numpy==1.26.1
+- pandas==2.1.1
+- matplotlib==3.8.0
+- seaborn==0.13.2
+- ydata-profiling==4.12.0 
+- plotly==5.17.0
+- ppscore==1.1.0 
+- streamlit==1.40.2
+- feature-engine==1.6.1
+- imbalanced-learn==0.11.0
+- scikit-learn==1.3.1
+- xgboost==1.7.6
+- yellowbrick==1.5 
+- Pillow==10.0.1
+---  
+
