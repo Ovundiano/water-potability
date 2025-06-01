@@ -372,3 +372,20 @@ This is a list of technologies I used while building this site:
 - Pillow==10.0.1
 ---  
 
+## Credits Accolade
+
+ ### Content 
+- My inspiration was gotten from [Code Institute](https://codeinstitute.net/ie/) Developing with Streamlit Machine Learning APP.
+- Heroku for hosting the application: [heroku.com](https://www.heroku.com/)
+- The name of the project "Water Potability" was gotten from [Kaggle](https://www.kaggle.com/code/nimapourmoradi/water-potability).
+- [![Google Dev Tools](https://img.shields.io/badge/Google-yellow?logo=developer.chrome&logoColor=6C660F)](https://developer.chrome.com/docs/devtools) Dev Tools Used For screenshot.
+- ChatGPT for problem solving out of hours and providing help with function formatting.
+---
+
+## Acknowledgements
+ - I give Special thanks to my wife Divine Mazi, who has been a great support system to me through out the journey of the project.
+ -  [Iuliia Konovalova](https://github.com/IuliiaKonovalova) thanks for your support and great guidance.
+ -  [Code Institute](https://codeinstitute.net/) tutors and Slack community members for their support and help.
+ -  [Ebuka-martins](https://github.com/Ebuka-martins) my friend who has been very supportive to me throughout the journey of the project.
+
+ 
