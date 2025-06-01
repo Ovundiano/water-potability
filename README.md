@@ -210,4 +210,51 @@ Display conclusions and recommendations based on the analysis:
 - **Next Steps**: Gives insights on further actions to take.
 
 
+## Installation
 
+To run the application locally, follow these steps:
+
+1. Clone the Repository:
+```
+  git clone https://github.com/Ovundiano/water-potability.git
+cd water-potability
+```
+
+2. Set Up a Virtual Environment (optional but recommended):
+```
+  python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+3. Install Dependencies:
+```
+  pip install -r requirements.txt
+```
+
+4. Dependencies
+```
+numpy==1.26.1
+pandas==2.1.1
+matplotlib==3.8.0
+seaborn==0.13.2
+ydata-profiling==4.12.0 
+plotly==5.17.0
+ppscore==1.1.0 
+streamlit==1.40.2
+feature-engine==1.6.1
+imbalanced-learn==0.11.0
+scikit-learn==1.3.1
+xgboost==1.7.6
+yellowbrick==1.5 
+Pillow==10.0.1 
+```
+
+5. Download the Dataset:
+ - Downloaded the dataset fro Kaggle
+ - Place it in the `data` folder as `dataset.csv` (or update the path in `data_loader.py`).
+
+ 6. Run the Application:
+ ```
+  streamlit run app.py
+  The app will open in your default browser at http://localhost:8501.
+```
