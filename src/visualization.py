@@ -20,6 +20,17 @@ def display_header():
         **Libraries**: Pandas, NumPy, Plotly, Scikit-learn, XGBoost.
         """
     )
+
+    st.write(
+        f"* For more in depth information, you can check out the associated "
+        f"[README](https://github.com/Ovundiano/water-potability/tree/main?tab=readme-ov-file) file."
+    )
+
+    st.write(
+        f"* You can explore water potability and related datasets on the "
+        f"[FAO website](https://www.kaggle.com/code/nimapourmoradi/water-potability)."
+    )
+
     st.markdown("---")
 
 
@@ -46,4 +57,15 @@ def conclusions_and_recommendations():
         - Explore ensemble methods to further improve prediction accuracy.
         """
     )
+
+    st.write(
+        f"* For more in depth information, you can check out the associated "
+        f"[README](https://github.com/Ovundiano/water-potability/tree/main?tab=readme-ov-file) file."
+    )
+
+    st.write(
+        f"* You can explore water potability and related datasets on the "
+        f"[FAO website](https://www.kaggle.com/code/nimapourmoradi/water-potability)."
+    )
+
     st.markdown("---")
