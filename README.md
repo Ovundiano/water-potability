@@ -210,6 +210,10 @@ This section provides an interface for predicting water potability based on user
 
 ![prediction-page](readme_images/prediction-4.png)
 
+![prediction-page](readme_images/prediction-5.png)
+
+![prediction-page](readme_images/prediction-6.png)
+
 ### Page 7 - Conclusions and Recommendations
 
 Display conclusions and recommendations based on the analysis:
