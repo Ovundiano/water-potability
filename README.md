@@ -322,9 +322,9 @@ Pillow==10.0.1
 
 ## User-Story
 
-| ![user-story]() | ![user-story]() |
+| ![user-story](readme_images/user-story-1.png) | ![user-story](readme_images/user-story-1.png) |
 |:-------------------------------------------:|:-------------------------------------------:|
-| **Kanban board** | **Kanban Issue** |
+| **Kanban Story** | **Kanban Issue** |
 
 
 ## Deployment - Using Github and Heroku
