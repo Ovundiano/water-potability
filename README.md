@@ -288,6 +288,11 @@ Pillow==10.0.1
    - **Workaround:** Enter valid values based on feature ranges.
    - **Status:** Planned input validation for numeric fields.
 
+2. **Heroku Memory Limits:**   
+   - **Issue:** Large dependencies MB (e.g. ppscore, pillow etc) which exceeded Heroku’s memory limits thereby, made the initial deployment failed.
+   - **Workaround:**  Removed some of the dependencies to reduce the memory usage that will not affect the core functionality of the app in heroku.
+   - **Status:** Monitoring memory usage.
+
 
 ### Testing Approach
 
