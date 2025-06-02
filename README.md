@@ -9,7 +9,7 @@ This Streamlit-based application provides an end-to-end solution for water quali
 
 ***
 
-**[Link to live Streamlit app]()**
+**[Link to live Streamlit app](https://water-potability-8ff5eecf5f96.herokuapp.com/)**
 
 This is the Milestone Project for Predictive Analytics section of the Full Stack Developer Course taught through Code Institute
 ***
@@ -303,12 +303,12 @@ Pillow==10.0.1
   3. **Manual Testing:** 
    - Tested UI rendering, error messages, and download functionality across browsers (Chrome, Microsoft edge) and devices (desktop, mobile). 
 
-  ![Heroku-page]()
+  ![Heroku-page](readme_images/heroku-2.png)
 
   4. **Deployment Testing:**
    - Deployed on Heroku to verify performance and accessibility.
 
-  ![Heroku-page]()
+  ![Heroku-page](readme_images/heroku.png)
 
 
 ## User-Story
@@ -378,7 +378,7 @@ Pillow==10.0.1
 * The web application is displayed and deployed using template provided by Code Institute to test the code.
 * For this project I used Manual deployment method to deploy the current state of the branch, every time I pushed the code from VS code.
 
-* The App live link: [Link to live Streamlit app]()
+* The App live link: [Link to live Streamlit app](https://water-potability-8ff5eecf5f96.herokuapp.com/)
 
 ---  
 
